@@ -16,7 +16,10 @@
       <aside class="panel sources">
         <div class="panel-head">
           <h2>Sources</h2>
-          <button id="add-toggle" class="pill-btn">+ Add</button>
+          <div class="panel-head-actions">
+            <button id="add-toggle" class="pill-btn">+ Add</button>
+            <button id="add-web-toggle" class="pill-btn">🌐 Web</button>
+          </div>
         </div>
 
         <form id="add-form" class="add-form hidden">
@@ -28,6 +31,14 @@
               Upload<input id="add-file" type="file" accept=".md,.txt,text/*" hidden />
             </label>
             <button type="button" id="add-cancel" class="pill-btn">Cancel</button>
+          </div>
+        </form>
+
+        <form id="add-web-form" class="add-form hidden">
+          <input id="add-web-topic" type="text" placeholder="Research a topic on the web…" />
+          <div class="add-actions">
+            <button type="submit" id="add-web-submit" class="pill-btn primary">Search web</button>
+            <button type="button" id="add-web-cancel" class="pill-btn">Cancel</button>
           </div>
         </form>
 

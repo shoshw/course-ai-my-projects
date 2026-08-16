@@ -17,8 +17,9 @@ from api.schemas import (
     Note,
     SourceDetail,
     SourceInfo,
+    WebResearchResponse,
 )
-from agents import chat
+from agents import chat, research
 from core.store import store
 
 
@@ -70,6 +71,13 @@ def _auto_name(content: str) -> str:
     first_line = content.strip().splitlines()[0] if content.strip() else "Pasted source"
     first_line = first_line.lstrip("# ").strip()
     return (first_line[:40] or "Pasted source") + ".txt"
+
+
+def add_web_sources(topic: str) -> WebResearchResponse:
+    """Research a topic across the web and add the sources the agent found worth keeping."""
+    result = research.research(topic)
+    sources = [_to_info(s) for s in store.list() if s.id in result.source_ids]
+    return WebResearchResponse(summary=result.summary, sources=sources)
 
 
 # -- chat ----------------------------------------------------------------------

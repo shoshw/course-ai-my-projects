@@ -42,6 +42,19 @@ class SetActiveRequest(BaseModel):
     active: bool
 
 
+class AddWebSourceRequest(BaseModel):
+    """Add sources by researching a topic across the web."""
+
+    topic: str
+
+
+class WebResearchResponse(BaseModel):
+    """The research agent's summary plus the sources it added."""
+
+    summary: str
+    sources: list[SourceInfo] = Field(default_factory=list)
+
+
 # -- chat ----------------------------------------------------------------------
 
 

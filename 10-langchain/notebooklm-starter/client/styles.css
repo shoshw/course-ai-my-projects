@@ -46,6 +46,7 @@ body {
   padding: 14px 16px 8px;
 }
 .panel-head h2 { margin: 0; font-size: 12px; text-transform: uppercase; letter-spacing: .07em; color: var(--muted); }
+.panel-head-actions { display: flex; gap: 6px; }
 .panel.sources, .panel.studio { padding-bottom: 10px; overflow-y: auto; }
 .panel.studio .small { padding: 0 16px; }
 

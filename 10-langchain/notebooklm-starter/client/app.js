@@ -110,6 +110,26 @@ async function uploadFile(file) {
   await loadSources();
 }
 
+async function addWebSources(e) {
+  e.preventDefault();
+  const topic = $("add-web-topic").value.trim();
+  if (!topic) return;
+  $("add-web-submit").disabled = true;
+  $("add-web-submit").textContent = "Researching…";
+  try {
+    const data = await api.send("POST", "/api/sources/web", { topic });
+    $("add-web-topic").value = "";
+    $("add-web-form").classList.add("hidden");
+    await loadSources();
+    addMessage("system", `🌐 ${data.summary}`);
+  } catch (e) {
+    addMessage("system", `⚠ ${e.message}`);
+  } finally {
+    $("add-web-submit").disabled = false;
+    $("add-web-submit").textContent = "Search web";
+  }
+}
+
 async function selectAll(checked) {
   await Promise.all(
     state.sources
@@ -268,6 +288,10 @@ $("add-toggle").onclick = () => $("add-form").classList.toggle("hidden");
 $("add-cancel").onclick = () => $("add-form").classList.add("hidden");
 $("add-form").addEventListener("submit", addText);
 $("add-file").onchange = (e) => e.target.files[0] && uploadFile(e.target.files[0]);
+
+$("add-web-toggle").onclick = () => $("add-web-form").classList.toggle("hidden");
+$("add-web-cancel").onclick = () => $("add-web-form").classList.add("hidden");
+$("add-web-form").addEventListener("submit", addWebSources);
 $("select-all").onchange = (e) => selectAll(e.target.checked);
 
 $("chat-form").addEventListener("submit", (e) => {
